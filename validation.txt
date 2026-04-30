@@ -1,4 +1,4 @@
 https://github.com/Mathias42lm/R2.09
-https://r2-09.vercel.app/
+https://r2-09-oyj3.vercel.app/
 
 De plus je confirme que les Supabase e vercel sont bien cree
