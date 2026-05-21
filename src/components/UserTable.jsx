@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 export default function UserTable({ users, onRefresh }) {
   const [newEmail, setNewEmail] = useState('');
   const [newName, setNewName] = useState('');
+  const [newRole, setNewRole] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -15,13 +16,14 @@ export default function UserTable({ users, onRefresh }) {
     
     const { error } = await supabase
       .from('profiles')
-      .insert([{ email: newEmail, full_name: newName, role: 'member' }]);
+      .insert([{ email: newEmail, full_name: newName, role: newRole }]);
 
     if (error) { 
       setError(error.message); 
     } else { 
       setNewEmail(''); 
-      setNewName(''); 
+      setNewName('');
+      setNewRole(''); 
       onRefresh(); 
     }
     setLoading(false);
@@ -50,6 +52,12 @@ export default function UserTable({ users, onRefresh }) {
           value={newName}
           onChange={(e) => setNewName(e.target.value)} 
           style={inputStyle} 
+        />
+        <input
+          placeholder='Rôle'
+          value={newRole}
+          onChange={(e) => setNewRole(e.target.value)}
+          style = {inputStyle}
         />
         <button type='submit' disabled={loading} style={btnStyle}>
           {loading ? '...' : '+ Ajouter'}
