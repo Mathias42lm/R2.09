@@ -1,25 +1,47 @@
+// src/App.jsx
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+
 function App() {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Écoute les changements de session (connexion/déconnexion)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => setSession(session)
+    );
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  if (loading) return <div>Chargement...</div>;
+
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '2rem', textAlign: 'center' }}>
-      {/* Modification exacte exigée par l'étape 5.2 du TD */}
-      <h1>🚀 Déploiement automatique opérationnel</h1>
-      
-      <p>Projet réalisé par <strong>Mathias Mellier</strong></p>
-      <p>Future application : gestion de tâches Kanban</p>
-      
-      {/* Optimisation : Lien cliquable sécurisé */}
-      <p>
-        Github :{' '}
-        <a 
-          href="https://github.com/Mathias42lm/R2.09" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{ color: '#0366d6', textDecoration: 'none' }}
-        >
-          https://github.com/Mathias42lm/R2.09
-        </a>
-      </p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path='/login' 
+          element={session ? <Navigate to='/dashboard' /> : <LoginPage />} 
+        />
+        <Route 
+          path='/dashboard' 
+          element={session ? <DashboardPage session={session} /> : <Navigate to='/login' />} 
+        />
+        <Route 
+          path='*' 
+          element={<Navigate to={session ? '/dashboard' : '/login'} />} 
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
