@@ -34,6 +34,16 @@ export default function UserTable({ users, onRefresh }) {
     await supabase.from('profiles').delete().eq('id', id);
     onRefresh();
   }
+  function Vrole(role){
+    if(role === 'Admin')
+    {
+      return <td style={adm}>🛡️ {role} </td>
+    }
+    else
+    {
+      return <td style={tdStyle}>{role} </td>
+    }
+  }
 
   return (
     <div>
@@ -82,7 +92,7 @@ export default function UserTable({ users, onRefresh }) {
             <tr key={u.id} style={{ background: i % 2 === 0 ? '#F8FAFC' : 'white' }}>
               <td style={tdStyle}>{u.email}</td>
               <td style={tdStyle}>{u.full_name || '-'}</td>
-              <td style={tdStyle}>{u.role}</td>
+              {Vrole(u.role)}
               <td style={tdStyle}>{new Date(u.created_at).toLocaleDateString('fr-FR')}</td>
               <td style={tdStyle}>
                 <button 
@@ -104,5 +114,6 @@ export default function UserTable({ users, onRefresh }) {
 
 const thStyle = { padding: '0.75rem 1rem', textAlign: 'left' };
 const tdStyle = { padding: '0.75rem 1rem', borderBottom: '1px solid #E2E8F0' };
+const adm = { padding: '0.75rem 1rem', borderBottom: '1px solid #E2E8F0', color : 'red'};
 const inputStyle = { padding: '0.5rem 0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem' };
 const btnStyle = { padding: '0.5rem 1rem', background: '#1A8C82', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' };
