@@ -43,6 +43,29 @@ export default function ProfilePage({ session }) {
     if (error) setPassErr(error.message);
     else     { setPassMsg('✅ Mot de passe mis à jour !'); setNewPass(''); }
   }
+  async function sendEmail() {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: ['destinataire@exemple.com'],
+        subject: '📋 Nouvelle tâche KanbanRT',
+        html: `
+          <h1>Nouvelle tâche assignée !</h1>
+          <p>La tâche <strong>Configurer Supabase</strong> vous a étéassignée.</p>
+          <p>Statut : <em>À faire</em> · Priorité : <em>Haute</em></p>
+          <a href='https://mon-kanban.vercel.app/dashboard'>Voir le tableau →</a>
+          `
+        }),
+      });
+    const result = await response.json();
+    if (result.success) {
+      console.log('E-mail envoyé ! ID :', result.id);
+    } else {
+      console.error('Erreur :', result.error);
+    }
+  }
+
 
   // ── Upload avatar ─────────────────────────────────────
   async function handleAvatarUpload(e) {
