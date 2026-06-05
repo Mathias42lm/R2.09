@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import UserTable from '../components/UserTable';
 import TaskList from '../components/TaskList';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 
 export default function DashboardPage({ session }) {
   const [users, setUsers] = useState([]);
