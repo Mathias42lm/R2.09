@@ -76,6 +76,25 @@ export default function TaskForm({ boardId, onCreated }) {
       setDueDate('');
       onCreated(); // Déclenche le rafraîchissement de la liste des tâches parent
     }
+    if (!error && dueDate) {
+      const formattedDate = new Date(dueDate).toLocaleDateString('fr-FR', {
+        day: '2-digit', month: 'long', year: 'numeric'
+      });
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: [session.user.email], // envoyer au créateur de la tâche
+          subject: `📋 Tâche créée : ${title}`,
+          html: `
+          <h2>Tâche créée avec succès</h2>
+          <p><strong>Titre :</strong> ${title}</p>
+          <p><strong>Priorité :</strong> ${priority}</p>
+          <p><strong>Échéance :</strong> ${formattedDate}</p>
+        `,
+        }),
+      });
+    }
   }
 
   return (
