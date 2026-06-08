@@ -1,7 +1,7 @@
 // src/pages/ProfilePage.jsx
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 
 export default function ProfilePage({ session }) {
   const user = session.user;
