@@ -1,16 +1,55 @@
-# React + Vite
+# KanbanRT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web de gestion de tâches collaborative inspirée de la méthode Kanban, développée avec React et Supabase.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## Équipe
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- CHIBOUB Mohamed 
+- MELLIER Mathias
+- LAPASIN Quentin
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Stack technique
+
+- **React 19** + **Vite**  -> interface utilisateur et bundler
+- **React Router DOM** -> navigation entre les pages et protection des routes (`/login`, `/dashboard`, `/profile`)
+- **Supabase** -> base de données PostgreSQL, authentification  et stockage de fichiers 
+- **Resend** -> envoi de courriels transactionnels, relayé par une API Route serverless Vercel
+- **Vercel** -> hébergement et déploiement continu 
+
+
+## Installation locale
+
+```bash
+git clone https://github.com/Mathias42lm/R2.09.git
+cd .\R2.09\
+npm install
+```
+
+
+
+Créez ensuite un fichier `.env.local` à la racine du projet (jamais commité) avec vos clés Supabase, récupérées dans Settings → API de votre projet Supabase :
+
+```
+VITE_SUPABASE_URL=https://xxxxxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+
+
+Puis lancez le serveur de développement :
+
+```bash
+npm run dev
+```
+
+L'application est alors accessible sur [http://localhost:5173](http://localhost:5173/).
+
+
+
+## Application déjà déployée
+
+[https://r2-09.vercel.app/login](https://r2-09.vercel.app/login)
